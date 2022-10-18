@@ -8,6 +8,7 @@ Este template de `terraform` se trae una VPC existente, y sobre esta VPC desplie
 ```
 main.tf
 outputs.tf
+variables.tf
 ```
 
 ## demo-aws-modules
