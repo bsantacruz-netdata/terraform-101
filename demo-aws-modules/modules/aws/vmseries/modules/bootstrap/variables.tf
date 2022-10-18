@@ -1,0 +1,110 @@
+variable "global_tags" {
+  description = "Map of arbitrary tags to apply to all resources."
+  default     = {}
+  type        = map(any)
+}
+
+variable "bootstrapping" {}
+
+variable "prefix" {
+  description = "The prefix to use for bucket name, IAM role name, and IAM role policy name. It is allowed to use dash \"-\" as the last character."
+  default     = "bootstrap-"
+  type        = string
+}
+
+variable "iam_instance_profile_name" {
+  description = "Name of the instance profile to create. If empty, name will be auto-generated."
+  default     = ""
+  type        = string
+}
+
+variable "force_destroy" {
+  description = "Set to false to prevent Terraform from destroying a bucket with unknown objects or locked objects."
+  default     = true
+  type        = bool
+}
+
+variable "source_root_directory" {
+  description = "The source directory to become the bucket's root directory. If empty uses `files` subdirectory of a Terraform configuration root directory."
+  default     = ""
+  type        = string
+}
+
+variable "bootstrap_directories" {
+  description = "List of subdirectories to be created inside the bucket (whether or not they exist locally inside the `source_root_directory`). A hardcoded pan-os requirement."
+  default = [
+    "config/",
+    "content/",
+    "software/",
+    "license/",
+    "plugins/"
+  ]
+  type = list(string)
+}
+
+### Variables below go to the init-cfg.txt
+variable "hostname" {
+  description = "The hostname of the VM-series instance."
+  default     = "vm-series-sura"
+  type        = string
+}
+
+variable "panorama-server" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The FQDN or IP address of the primary Panorama server."
+  default     = "1.1.1.1"
+  type        = string
+}
+
+variable "panorama-server2" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The FQDN or IP address of the secondary Panorama server."
+  default     = ""
+  type        = string
+}
+
+variable "tplname" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The Panorama template stack name."
+  default     = "sdm-template"
+  type        = string
+}
+
+variable "dgname" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The Panorama device group name."
+  default     = "sdm-dg"
+  type        = string
+}
+
+variable "dns-primary" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The IP address of the primary DNS server."
+  default     = "8.8.8.8"
+  type        = string
+}
+
+variable "dns-secondary" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "The IP address of the secondary DNS server."
+  default     = "4.4.4.4"
+  type        = string
+}
+
+variable "vm-auth-key" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "Virtual machine authentication key."
+  default     = "123456789012345"
+  type        = string
+}
+
+variable "op-command-modes" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "Set jumbo-frame and/or mgmt-interface-swap."
+  default     = ""
+  type        = string
+}
+
+variable "plugin-op-commands" { # tflint-ignore: terraform_naming_convention # TODO rename to snake_case
+  description = "Set plugin-op-commands."
+  default     = "aws-gwlb-inspect:enable"
+  type        = string
+}
+
+variable "cgname" {
+  description = "Collector Group"
+  default     = "cg-azure"
+  type        = string
+}
